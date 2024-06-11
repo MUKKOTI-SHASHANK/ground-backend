@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
 
 const verifyuser = async (req, res, next) => {
   try {
-    console.log("############################");
+    
     const token = req.cookies.token || req.headers["x-access-token"];
     console.log("token", token);
     if (!token) {
