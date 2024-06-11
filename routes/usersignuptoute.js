@@ -35,6 +35,7 @@ router.post("/login", async (req, res) => {
         expiresIn: "1h",
       });
       res.cookie("token", token, { httpOnly: true, maxAge: 3600000 });
+      console.log("token in login", token);
       return res.json({ status: true, message: "Login successful" });
     } else {
       return res.json({ message: "Incorrect Password" });
@@ -46,7 +47,6 @@ router.post("/login", async (req, res) => {
 
 const verifyuser = async (req, res, next) => {
   try {
-    
     const token = req.cookies.token || req.headers["x-access-token"];
     console.log("token", token);
     if (!token) {
