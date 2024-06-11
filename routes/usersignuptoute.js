@@ -34,7 +34,12 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign({ user: user.email }, process.env.SecretKey, {
         expiresIn: "1h",
       });
-      res.cookie("token", token, { httpOnly: true, maxAge: 3600000, sameSite: "Lax", secure: process.env.NODE_ENV === "production"  });
+      res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 3600000,
+        sameSite: 'None',
+        secure: process.env.NODE_ENV === "production",
+      });
       console.log("token in login", token);
       return res.json({ status: true, message: "Login successful" });
     } else {
@@ -47,6 +52,7 @@ router.post("/login", async (req, res) => {
 
 const verifyuser = async (req, res, next) => {
   try {
+    console.log("req in verify user back", req);
     const token = req.cookies.token || req.headers["x-access-token"];
     console.log("token", token);
     if (!token) {
