@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
         sameSite: 'None',
         secure: process.env.NODE_ENV === "production",
       });
-      console.log("token in login", token);
+      // console.log("token in login", token);
       return res.json({ status: true, message: "Login successful" });
     } else {
       return res.json({ message: "Incorrect Password" });
@@ -52,9 +52,9 @@ router.post("/login", async (req, res) => {
 
 const verifyuser = async (req, res, next) => {
   try {
-    console.log("req in verify user back", req);
+    // console.log("req in verify user back", req);
     const token = req.cookies.token || req.headers["x-access-token"];
-    console.log("token", token);
+    // console.log("token", token);
     if (!token) {
       return res.json({ status: false, message: "no token" });
     }
@@ -76,12 +76,12 @@ router.get("/verify", verifyuser, (req, res) => {
 });
 
 router.get("/classify", (req, res) => {
-  console.log("req", req);
+  // console.log("req", req);
   console.log("req.quer", req.query);
   const grainSize = parseFloat(req.query.grainSize) || 0;
-  console.log(grainSize);
+  // console.log(grainSize);
   const area = parseFloat(req.query.area) || 0;
-  console.log("area");
+  // console.log("area");
 
   let grainSizeTechniques = [];
   let areaTechniques = [];
