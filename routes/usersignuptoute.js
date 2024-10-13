@@ -206,4 +206,9 @@ router.get("/classify", (req, res) => {
   res.json({ commonTechniques });
 });
 
+// Health Check Route
+router.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 export { router as UserSignuproute };
