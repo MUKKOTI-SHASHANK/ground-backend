@@ -34,12 +34,12 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign({ user: user.email }, process.env.SecretKey, {
         expiresIn: "1h",
       });
-      res.cookie("token", token, {
-        httpOnly: true,
-        maxAge: 3600000,
-        sameSite: 'None',
-        secure: process.env.NODE_ENV === "production",
-      });
+      // res.cookie("token", token, {
+      //   httpOnly: true,
+      //   maxAge: 3600000,
+      //   sameSite: 'None',
+      //   secure: true,
+      // });
       // console.log("token in login", token);
       return res.json({ status: true, message: "Login successful" });
     } else {
@@ -53,21 +53,25 @@ router.post("/login", async (req, res) => {
 const verifyuser = async (req, res, next) => {
   try {
     // console.log("req in verify user back", req);
-    const token = req.cookies.token || req.headers["x-access-token"];
+    const token = req.headers["x-access-token"];
     // console.log("token", token);
     if (!token) {
-      return res.json({ status: false, message: "no token" });
+      return res.status(403).json({ status: false, message: "No token" });
     }
     const decoded = await jwt.verify(token, process.env.SecretKey);
     req.user = decoded;
     next();
   } catch (err) {
-    return res.json({ message: error });
+    return res.status(401).json({ message: "Unauthorized" });
   }
 };
 
 router.get("/signout", (req, res) => {
-  res.clearCookie("token");
+  // res.clearCookie("token", {
+  //   httpOnly: true,
+  //   sameSite: 'None',
+  //   secure: true,
+  // });
   return res.json({ status: true, message: "Signout successful" });
 });
 
