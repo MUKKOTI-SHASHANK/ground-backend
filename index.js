@@ -18,6 +18,7 @@ app.use(
     origin: [
       "http://127.0.0.1:5173",
       "https://ground-improvement-front.onrender.com",
+      "https://ground-improvement-front.onrender.com/login",
     ],
     credentials: true,
   })
